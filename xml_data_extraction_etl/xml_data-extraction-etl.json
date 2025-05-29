@@ -1,0 +1,39 @@
+{
+  "name" : "xml_data-extraction-etl",
+  "jobMode" : "SCRIPT",
+  "description" : "xml_data-extraction-etl extracts the required data from the XML files and stores them in the S3 in the Parquet format for further processing.",
+  "role" : "arn:aws:iam::396608798140:role/AWSGlue_RDS_Role",
+  "executionProperty" : {
+    "maxConcurrentRuns" : 1
+  },
+  "command" : {
+    "name" : "glueetl",
+    "scriptLocation" : "s3://lumino-data/scripts/xml_data-extraction-etl.py",
+    "pythonVersion" : "3"
+  },
+  "defaultArguments" : {
+    "--enable-metrics" : "true",
+    "--spark-event-logs-path" : "s3://lumino-data/spark_ui_logs/",
+    "--enable-job-insights" : "true",
+    "--enable-observability-metrics" : "true",
+    "--enable-glue-datacatalog" : "true",
+    "--job-bookmark-option" : "job-bookmark-disable",
+    "--job-language" : "python",
+    "--TempDir" : "s3://lumino-data/temp_files/",
+    "--extra-jars" : "s3://lumino-data/libs/spark-xml_2.12-0.13.0.jar"
+  },
+  "maxRetries" : 0,
+  "allocatedCapacity" : 20,
+  "timeout" : 480,
+  "maxCapacity" : 20.0,
+  "glueVersion" : "5.0",
+  "numberOfWorkers" : 10,
+  "workerType" : "G.2X",
+  "executionClass" : "STANDARD",
+  "sourceControlDetails" : {
+    "provider" : "GITHUB",
+    "repository" : "Lumino",
+    "branch" : "lumino1",
+    "folder" : "xml_data_extraction_etl"
+  }
+}
