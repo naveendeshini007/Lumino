@@ -1,0 +1,41 @@
+{
+  "name" : "standard_glue_job_updated_v1",
+  "jobMode" : "SCRIPT",
+  "description" : "Here it inserts the 5 years data into lumniodb in the table financials",
+  "role" : "arn:aws:iam::396608798140:role/AWSGlue_RDS_Role",
+  "executionProperty" : {
+    "maxConcurrentRuns" : 1
+  },
+  "command" : {
+    "name" : "glueetl",
+    "scriptLocation" : "s3://lumino-data/scripts/standard_glue_job_updated_v1.py",
+    "pythonVersion" : "3"
+  },
+  "defaultArguments" : {
+    "--enable-metrics" : "true",
+    "--spark-event-logs-path" : "s3://lumino-data/spark_ui_logs/",
+    "--enable-job-insights" : "true",
+    "--enable-observability-metrics" : "true",
+    "--enable-glue-datacatalog" : "true",
+    "--job-bookmark-option" : "job-bookmark-disable",
+    "--job-language" : "python",
+    "--TempDir" : "s3://lumino-data/temp_files/"
+  },
+  "connections" : {
+    "connections" : [ "xml_db_connection" ]
+  },
+  "maxRetries" : 0,
+  "allocatedCapacity" : 20,
+  "timeout" : 480,
+  "maxCapacity" : 20.0,
+  "glueVersion" : "5.0",
+  "numberOfWorkers" : 10,
+  "workerType" : "G.2X",
+  "executionClass" : "STANDARD",
+  "sourceControlDetails" : {
+    "provider" : "GITHUB",
+    "repository" : "Lumino",
+    "branch" : "lumino1",
+    "folder" : "parquet_to_database_glue_job"
+  }
+}
